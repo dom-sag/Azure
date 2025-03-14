@@ -1,0 +1,24 @@
+- name: Setup Azure Container Apps
+  hosts: localhost
+  tasks:
+    - name: Create Resource Group
+      azure_rm_resourcegroup:
+        name: azuredashboard
+        location: eastus
+
+    - name: Create ACA Environment
+      command: >
+        az containerapp env create
+        --name azureACA
+        --resource-group azuredashboard
+        --location eastus
+
+    - name: Deploy Container App (Nginx)
+      command: >
+        az containerapp create
+        --name azureACA
+        --resource-group azuredashaboard
+        --environment myContainerEnv
+        --image nginx
+        --target-port 80
+        --ingress external
