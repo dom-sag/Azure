@@ -1,0 +1,69 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  frontendDir: 'frontend'
+  backendDir: 'backend'
+
+steps:
+  # Set up Node.js
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '18.x'
+    displayName: 'Use Node.js'
+
+  # Build Frontend
+  - script: |
+      echo "📦 Installing frontend dependencies..."
+      cd $(frontendDir)
+      npm install
+
+      echo "🛠️ Building frontend..."
+      npm run build
+    displayName: 'Build Frontend'
+
+  # Optional: Frontend Tests
+  - script: |
+      cd $(frontendDir)
+      npm test || echo "⚠️ Frontend tests failed or not configured."
+    displayName: 'Run Frontend Tests'
+
+  # Build Backend
+  - script: |
+      echo "📦 Installing backend dependencies..."
+      cd $(System.DefaultWorkingDirectory)/$(backendDir)
+      npm install
+
+      echo "🛠️ Building backend..."
+      npm run build
+    displayName: 'Build Backend'
+
+  # Optional: Backend Tests
+  - script: |
+      cd $(backendDir)
+      npm test || echo "⚠️ Backend tests failed or not configured."
+    displayName: 'Run Backend Tests'
+
+  # Publish Artifacts
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(frontendDir)/dist'
+      ArtifactName: 'frontend'
+      publishLocation: 'Container'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(backendDir)/dist'
+      ArtifactName: 'backend'
+      publishLocation: 'Container'
+
+
+
