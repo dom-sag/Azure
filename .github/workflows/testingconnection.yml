@@ -43,7 +43,7 @@ jobs:
         run: terraform plan
 
       - name: Terraform Apply
-        run: terraform apply
+        run: terraform apply -auto-approve
 
         #resource will be deployed
       

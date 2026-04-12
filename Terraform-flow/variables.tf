@@ -47,7 +47,7 @@ variable "admin_username" {
   
 }
 
-variable "admin_passowrd" {
+variable "admin_password" {
     description = "password for vm login"
     type = string
     sensitive = true

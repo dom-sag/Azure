@@ -43,7 +43,7 @@ resource "azurerm_linux_virtual_machine" "terra" {
     location = var.location
     size = "Standard_B1s"
     admin_username = var.admin_username
-    admin_password = var.admin_passowrd
+    admin_password = var.admin_password
 
   disable_password_authentication = false
 
