@@ -30,7 +30,7 @@ resource "azurerm_network_interface" "terra" {
 
     ip_configuration {
       name = "internal"
-      subnet_id = var.subnet
+      subnet_id = azurerm_subnet.terra.id
       private_ip_address_allocation = "Dynamic"
 
     }
