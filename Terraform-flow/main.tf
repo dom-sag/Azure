@@ -26,7 +26,7 @@ resource "azurerm_subnet" "terra" {
 resource "azurerm_network_interface" "terra" {
     name = var.network_interface
     resource_group_name = azurerm_resource_group.terra.name
-    location = var.location.name
+    location = var.location
 
     ip_configuration {
       name = "internal"
@@ -48,7 +48,7 @@ resource "azurerm_linux_virtual_machine" "terra" {
   disable_password_authentication = false
 
   network_interface_ids = [
-    azurerm_network_interface.nic.id
+    azurerm_network_interface.terra.id
   ]
 
   os_disk {
