@@ -12,7 +12,7 @@ variable "location" {
   
 }
 
-variable "virtual_netowrk" {
+variable "virtual_network" {
     description = "The Vnet for resources"
     type = string
     default = "terraform-vnet"
